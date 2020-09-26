@@ -149,20 +149,18 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
-//ВАЖНО:  ФИЛЬТРАЦИИ ИНЪЕКЦИИ
+//ФИЛЬТРАЦИЯ ИНЪЕКЦИИ
 function esc($str) {
     $text = htmlspecialchars($str);
     return $text;
 }
 
+//Получить значение из $_POST для заполнения полей ввода
 function getPostVal($name) {
     return $_POST[$name] ?? "";
 }
 
-function getPostFile($name) {
-    return $_FILES[$name] ?? "";
-}
-
+//Валидация длины строки
 function is_strLen_valide($min, $max, $name) {
     $len = strlen($name);
     if ($len < $min or $len > $max) {
@@ -171,9 +169,9 @@ function is_strLen_valide($min, $max, $name) {
     return null;
 }
 
+//Получение имени файла из пути
 function getNameFileOfURl($url) {
     $afn = explode ( "/", $url );
     return end($afn);
 }
 
-?>

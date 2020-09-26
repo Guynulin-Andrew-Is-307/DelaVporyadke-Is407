@@ -1,6 +1,4 @@
 <?php
-
-//Возможно, нужно исправить дублирование
 $errors_keys = [];
 $errors = [];
 $proj_v =  isset($_GET['project']) ? $_GET['project'] : null;
@@ -39,14 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES)){
      if($_FILES['file']['error'] == 0 && $_FILES['file']['size'] > 2097152) {
         $errors['file'] = 'Превышен максимальный вес файла в 2МБ';
-     /*}elseif (empty($_FILES['file']['error'])){
-        $errors['file'] = 'Превышен лимит размера файла установленный сервером';*/
      }
     }
 
 
     if (count($errors)) {
-    // if (1==1) {
         $errors_keys = array_keys($errors);
     }else{
 
@@ -55,9 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $file_name = $_FILES['file']['name'];
                 // $file_path = __DIR__ . '/uploads/';
-
                 // $file_url = 'uploads/'. $file_name;
-                //Код проверки и создания папки пользователя для удобного удаления
+                //Код проверки и создания папки пользователя для личного удобства удаления
                 $dir_url = 'uploads/user'.$user_id.'/';
                 $file_url = $dir_url.$file_name;
                 if(!file_exists ($dir_url)){
@@ -73,9 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: /index.php?project=".$projectz[array_search($_POST['project'], array_column($projectz, "ID"))]['Name']);
 
     }
-
 }
-
 
 $page_content = include_template('form_task.php',
     [

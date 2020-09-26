@@ -1,19 +1,11 @@
 <?php
-
-
 require_once("connection.php");
 
 if(!$con){
 	print("Error connected: " . mysqli_connect_error());
 }else{
-
-	// if (isset($_GET['success'])){
-	// 	print('Спасибо за ваше сообщение!');
-	// }
-
 	require_once("db.php");
 	require_once("helpers.php");
-
 
 	$user_id = intval(1);
 	$projectz = get_project($con, $user_id);

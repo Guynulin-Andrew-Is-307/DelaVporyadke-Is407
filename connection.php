@@ -5,7 +5,6 @@ $user_bd = "root";
 $password_bd = "";
 $name_bd = "doisgone";
 
-
 $con = mysqli_connect($ip_bd, $user_bd, $password_bd, $name_bd);
 
 

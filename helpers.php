@@ -164,7 +164,7 @@ function getPostVal($name) {
 function is_strLen_valide($min, $max, $name) {
     $len = strlen($name);
     if ($len < $min or $len > $max) {
-        return 'Длина поля должна быть от '.$min.' до '.$max.' символов';
+        return 'Длина значения должна быть от '.$min.' до '.$max.' символов';
     }
     return null;
 }

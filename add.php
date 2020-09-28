@@ -1,5 +1,4 @@
 <?php
-$errors_keys = [];
 $errors = [];
 $proj_v =  isset($_GET['project']) ? $_GET['project'] : null;
 
@@ -41,9 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    if (count($errors)) {
-        $errors_keys = array_keys($errors);
-    }else{
+    if (!count($errors)) {
 
         $file_ur = null;
         if (isset($_FILES) && $_FILES['file']['error']==0) {
@@ -74,9 +71,8 @@ $page_content = include_template('form_task.php',
         'con' => $con,
         'user_id' => $user_id,
         'projectz' => $projectz,
-        'errors_keys' => $errors_keys,
         'errors' => $errors
-    ]);
+]);
 
 
 

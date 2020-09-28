@@ -89,8 +89,8 @@ CREATE TABLE `user` (
   `ID` int(10) UNSIGNED NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Name` varchar(255) NOT NULL,
-  `RegistrationDate` date NOT NULL,
-  `Password` varchar(30) NOT NULL
+  `RegistrationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -98,8 +98,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID`, `Email`, `Name`, `RegistrationDate`, `Password`) VALUES
-(1, 'ladybag2000@gmail.com', 'Константин', '2007-09-16', '1'),
-(2, 'ladybag2001@gmail.com', 'Сергей', '2007-09-16', '2');
+(1, 'ladybag2000@gmail.com', 'Константин', '2007-09-16 00:00:00', '1'),
+(2, 'ladybag2001@gmail.com', 'Сергей', '2007-09-16 00:00:00', '2');
 
 --
 -- Индексы сохранённых таблиц
@@ -142,7 +142,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT для таблицы `task`
 --
 ALTER TABLE `task`
-  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT для таблицы `user`

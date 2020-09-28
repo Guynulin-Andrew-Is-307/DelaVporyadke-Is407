@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body>
+<body <?=$bodybackground?>>
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -19,17 +19,7 @@
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="?addTask<?= isset($_GET['project']) ? "&project=".$_GET['project'] : ""?>">Добавить задачу</a>
-
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__data">
-                        <p>Константин</p>
-
-                        <a href="#">Выйти</a>
-                    </div>
-                </div>
-            </div>
+            <?=$header_side;?>
         </header>
 
         <div class="content">
@@ -48,8 +38,7 @@
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus" href="?addTask<?= isset($_GET['project']) ? "&project=".$_GET['project'] : ""?>">Добавить задачу</a>
-
+        <?=$footer_button?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">

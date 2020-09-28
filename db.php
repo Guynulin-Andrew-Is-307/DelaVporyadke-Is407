@@ -31,7 +31,17 @@ function get_id_from_project($con, $user_id, $prjnm) {
     $res = mysqli_stmt_get_result($stmt);
     $idprj = mysqli_fetch_assoc($res);
     return $idprj['ID'] ?? null;
+}
 
+
+function get_username($con, $user_id) {
+    $sql = "SELECT Name FROM `user` WHERE `ID` = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', intval($user_id));
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $idprj = mysqli_fetch_assoc($res);
+    return $idprj['Name'] ?? null;
 }
 
 //Получение задач по id проекта
@@ -56,6 +66,17 @@ function get_try_project_from_id($con, $user_id, $idprj) {
     return $idprj['EXIST'] !== 0 ? true : false;
 }
 
+//Проверка уникальности email
+function get_try_user_from_email($con, $email) {
+    $sql = "SELECT EXISTS(SELECT * FROM `user` WHERE `Email` = ?) AS `EXIST`";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 's', strval($email));
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $idprj = mysqli_fetch_assoc($res);
+    return $idprj['EXIST'] !== 0 ? true : false;
+}
+
 //add задач
 function addTask($con, $name, $file = null, $date_c = null, $user_id, $proj) {
     $sql = "INSERT INTO `task` ( `Completed`, `Name`, `File`, `DateOfCompletion`, `Author`, `Project`) VALUES ( 0, ?, ?, ?, ?, ?)";
@@ -64,5 +85,13 @@ function addTask($con, $name, $file = null, $date_c = null, $user_id, $proj) {
     mysqli_stmt_execute($stmt);
 }
 
+//add user
+function addUser($con, $name, $email, $password) {
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO `user` ( `Email`, `Name`, `Password`) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'sss', $email, $name, $passwordHash);
+    mysqli_stmt_execute($stmt);
+}
 
 

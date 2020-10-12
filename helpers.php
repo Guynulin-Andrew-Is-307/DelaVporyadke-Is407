@@ -159,6 +159,9 @@ function esc($str) {
 function getPostVal($name) {
     return $_POST[$name] ?? "";
 }
+function getGetVal($name) {
+    return $_GET[$name] ?? "";
+}
 
 //Валидация длины строки
 function is_strLen_valide($min, $max, $name) {

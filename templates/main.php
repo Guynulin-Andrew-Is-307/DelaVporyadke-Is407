@@ -5,8 +5,8 @@
         <ul class="main-navigation__list">
         	<?php foreach ($projectz as $key => $projez): ?>
 
-            <li class="main-navigation__list-item <?= $projez['Name'] === htmlspecialchars($_GET['project']) ? "main-navigation__list-item--active":"" ?>">
-                <a class="main-navigation__list-item-link" href="index.php?project=<?=htmlspecialchars($projez['Name']). (isset($_GET['show_completed']) ? "&show_completed=".$_GET['show_completed'] : "") ?>"><?=htmlspecialchars($projez['Name']); ?></a>
+            <li class="main-navigation__list-item <?= $projez['Name'] === $currentproject ? "main-navigation__list-item--active":"" ?>">
+                <a class="main-navigation__list-item-link" href="<?=$urlnavigationOfProject.htmlspecialchars($projez['Name'])?>"><?=htmlspecialchars($projez['Name']);?></a>
                 <span class="main-navigation__list-item-count"> <?=$projez['Quantity']; ?> </span>
             </li>
 
@@ -29,10 +29,10 @@
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
-            <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <a href="<?=$urlnavigationOfParam?>AllTask" class="tasks-switch__item <?= 'AllTask'===$currentparam ? 'tasks-switch__item--active' : ''?>">Все задачи</a>
+            <a href="<?=$urlnavigationOfParam?>Agenda" class="tasks-switch__item <?= 'Agenda'===$currentparam ? 'tasks-switch__item--active' : ''?>">Повестка дня</a>
+            <a href="<?=$urlnavigationOfParam?>Tomorrow" class="tasks-switch__item <?= 'Tomorrow'===$currentparam ? 'tasks-switch__item--active' : ''?>">Завтра</a>
+            <a href="<?=$urlnavigationOfParam?>Overdue" class="tasks-switch__item <?= 'Overdue'===$currentparam ? 'tasks-switch__item--active' : ''?>">Просроченные</a>
         </nav>
 
         <label class="checkbox">

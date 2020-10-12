@@ -68,8 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $page_content = include_template('form_task.php',
     [
-        'con' => $con,
-        'user_id' => $user_id,
         'projectz' => $projectz,
         'errors' => $errors
 ]);

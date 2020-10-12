@@ -18,6 +18,7 @@ if(!$con){
 
 
 	$title = 'Дела в порядке';
+	$contentside='';
 	$bodybackground = false;
 	$withsidebar = true;
 	$welcome = false;
@@ -26,15 +27,19 @@ if(!$con){
 		if (isset($_GET['addTask'])) {
 		    require_once ('add.php');
 			$title = 'Добавление задачи - Дела в порядке';
+		}elseif (isset($_GET['addProject'])) {
+		    require_once ('addProject.php');
+			$title = 'Добавление проекта - Дела в порядке';
 		}else{
 	        require_once("smain.php");
 		}
-
+ 		
+ 		require_once("scontentside.php");
 		$header_side = include_template('header_side.php', [
 			'user_name' => get_username($con, $user_id)
 		]);
-		$footer_button = include_template('footer_button.php');
-		
+
+		$footer_button = include_template('footer_button.php');	
 	}else{
 		$header_side = include_template('unk_header_side.php');
 		$footer_button = '';
@@ -52,9 +57,8 @@ if(!$con){
 		}
 	};
 
-
 	$layout_content = include_template('layout.php', [
-		'content' => $page_content,
+		'content' => $contentside.$page_content,
 		'title' => $title,
 
 		'header_side' => $header_side,
@@ -63,6 +67,7 @@ if(!$con){
 		'withsidebar' => $withsidebar,
 		'welcome' => $welcome
 	]);
+	
 	print($layout_content);
 }
 

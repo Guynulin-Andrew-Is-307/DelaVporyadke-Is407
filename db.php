@@ -137,4 +137,21 @@ function addUser($con, $name, $email, $password) {
     mysqli_stmt_execute($stmt);
 }
 
+//add проект
+function addProject($con, $name, $user_id) {
+    $sql = "INSERT INTO `project` ( `Name`, `Author`) VALUES (?, ?)";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'si', $name, $user_id);
+    mysqli_stmt_execute($stmt);
+}
 
+//Проверка уникальности проект
+function get_try_project($con, $name, $user_id) {
+    $sql = "SELECT EXISTS(SELECT * FROM `project` WHERE `Name` = ? AND `Author` = ?) AS `EXIST`";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'si', $name, $user_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $idprj = mysqli_fetch_assoc($res);
+    return $idprj['EXIST'] !== 0 ? true : false;
+}

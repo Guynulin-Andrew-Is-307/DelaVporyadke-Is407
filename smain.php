@@ -33,7 +33,6 @@ if (isset($_GET['project'])) {
 
 
 $urlnavigationOfParam = "/index.php?".(isset($_GET['project']) ? 'project='.$currentproject."&" : '').$show_completed."ParamSelect=" ;
-$urlnavigationOfProject = "/index.php?".(isset($_GET['ParamSelect']) ? 'ParamSelect='.$currentparam."&" : '').$show_completed.'project=';
 
 $page_content = include_template('main.php',
 [
@@ -43,7 +42,6 @@ $page_content = include_template('main.php',
     'errors' => $errors,
     'show_complete_tasks' => $show_complete_tasks,
     'urlnavigationOfParam' => $urlnavigationOfParam,
-    'urlnavigationOfProject' => $urlnavigationOfProject,
     'currentproject' => $currentproject,
     'currentparam' => $currentparam,
 

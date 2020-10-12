@@ -21,7 +21,7 @@
 <main class="content__main">
     <h2 class="content__main-heading">Список задач</h2>
 
-    <form class="search-form" action="index.php" method="post" autocomplete="off">
+    <form class="search-form" action="<?=$currenturl?>" method="post" autocomplete="off">
         <input class="search-form__input" type="text" name="SearchByTasks" value="<?=getPostVal('SearchByTasks')?>" placeholder="Поиск по задачам">
 
         <input class="search-form__submit" type="submit" name="" value="Искать">
@@ -46,7 +46,7 @@
         <?php
             if(count($errors) != 0){
                 foreach ($errors as $key => $value) {
-                    echo "<h2><span style='color: #9A34F1'>".$key.": </span>".$value."</h2>";
+                    echo "<h3><span style='color: #9A34F1'>".$key.": </span>".$value."</h3>";
                 }
             }
         ?>

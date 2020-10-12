@@ -45,10 +45,17 @@ function get_username($con, $user_id) {
 }
 
 //Получение задач по id проекта
-function get_tasks_from_search($con, $user_id, $SearchByTasks) {
-    $sql =  "SELECT * FROM `task` WHERE `Author` = ? AND MATCH(`Name`) AGAINST(?) ORDER BY ID DESC";
-    $stmt = mysqli_prepare($con, $sql);
-    mysqli_stmt_bind_param($stmt, 'is', intval($user_id), strval($SearchByTasks));
+function get_tasks_from_search($con, $user_id, $SearchByTasks, $idprj = null) {
+    if(isset($idprj)){
+        $sql =  "SELECT * FROM `task` WHERE `Author` = ? AND `Project` = ? AND MATCH(`Name`) AGAINST(?) ORDER BY ID DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, 'iis', intval($user_id), intval($idprj), strval($SearchByTasks));
+    }else{
+        $sql =  "SELECT * FROM `task` WHERE `Author` = ? AND MATCH(`Name`) AGAINST(?) ORDER BY ID DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, 'is', intval($user_id), strval($SearchByTasks));
+    }
+
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $taskz = mysqli_fetch_all($res, MYSQLI_ASSOC);

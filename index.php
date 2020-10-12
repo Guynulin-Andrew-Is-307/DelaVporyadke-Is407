@@ -4,44 +4,23 @@ require_once("connection.php");
 if(!$con){
 	print("Error connected: " . mysqli_connect_error());
 }else{
-
+	
+    session_start();
+    if (isset($_GET['SignOut'])){
+    	$_SESSION = [];
+    	header("Location: /");
+    }
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    
 
 	require_once("db.php");
 	require_once("helpers.php");
 
-	// session_start();
-	// // ini_set('session.cookie_lifetime', 86400);
-	// // ini_set('session.gc_maxlifetime', 86400);
-
-	// if (isset($_SESSION['username'])) {
-	//  // print($_SESSION['username']);
-	// }
-	// $_SESSION['username'] = "Вася";
-
-	// // 	strtotime($date)
-
-	// 	$name = "visitcount";
-	// $value = 1;
-	// $expire = strtotime(time()); //"Mon, 25-Jan-2027 10:00:00 GMT";
-	// $path = "/";
-	// setcookie($name, $value, $expire, $path);
-
-	// // 	Set-Cookie: gifs_fav=14,34,52,98; expires="Mon, 25-Jan-2027 10:03:02 GMT"; path=/;
-
-	// 	if (isset($_COOKIE['visitcount'])) {
-	//  		// print($_COOKIE['visitcount']);
-	// 	}
-
-	// // if (isset($_COOKIE['visit_count'])) {
-	// //  unset($_COOKIE['visit_count']);
-	// //  setcookie($name, '', time() - 3600, '/');
-	// // }
-
-
-	$user_id = null;
 
 	$title = 'Дела в порядке';
-	$bodybackground = '';
+	$bodybackground = false;
+	$withsidebar = true;
+	$welcome = false;
 	if(isset($user_id)){
 		$projectz = get_project($con, $user_id);
 		if (isset($_GET['addTask'])) {
@@ -67,7 +46,9 @@ if(!$con){
 	        $title = 'Регистрация - Дела в порядке';
 		}else {
 			$page_content = include_template('guest.php');
-			$bodybackground = 'class="body-background"';
+			$bodybackground = true;
+			$withsidebar = false;
+			$welcome = true;
 		}
 	};
 
@@ -78,7 +59,9 @@ if(!$con){
 
 		'header_side' => $header_side,
 		'footer_button' => $footer_button,
-		'bodybackground' => $bodybackground
+		'bodybackground' => $bodybackground,
+		'withsidebar' => $withsidebar,
+		'welcome' => $welcome
 	]);
 	print($layout_content);
 }

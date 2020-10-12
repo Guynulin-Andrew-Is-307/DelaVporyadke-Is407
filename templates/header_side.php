@@ -5,7 +5,7 @@
         <div class="user-menu__data">
             <p><?= $user_name?></p>
 
-            <a href="#">Выйти</a>
+            <a href="/?SignOut">Выйти</a>
         </div>
     </div>
 </div>

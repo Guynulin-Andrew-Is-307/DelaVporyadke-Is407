@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body <?=$bodybackground?>>
+<body <?= $bodybackground ? 'class="body-background"' : '' ?>  >
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div  class="container <?= $withsidebar ? 'container--with-sidebar' : ''?> "  >
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -23,7 +23,7 @@
         </header>
 
         <div class="content">
-            <main class="content">
+            <main class="content <?= $welcome ? 'welcome': '' ?>">
                 <?=$content;?>
             </main>
         </div>

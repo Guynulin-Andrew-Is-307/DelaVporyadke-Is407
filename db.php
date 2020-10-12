@@ -55,6 +55,31 @@ function get_tasks_from_id($con, $user_id, $idprj) {
     return $taskz;
 }
 
+//Получение id user
+function get_user_id($con, $email, $password) {
+    $sql =  "SELECT `Password` FROM `user` WHERE `Email` = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 's', strval($email));
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $passworduser = mysqli_fetch_assoc($res);
+
+    $hashpassworduser = $passworduser['Password'];
+
+    if (password_verify(strval($password), $hashpassworduser)) {
+        $sql =  "SELECT `ID` FROM `user` WHERE `Email` = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, 's', strval($email));
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        $iduser = mysqli_fetch_assoc($res);
+        return $iduser['ID'] ?? null;
+    }
+    else {
+        return null;
+    }
+}
+
 //Проверка реальности ид проекта
 function get_try_project_from_id($con, $user_id, $idprj) {
     $sql = "SELECT EXISTS(SELECT * FROM `project` WHERE `Author` = ? AND `ID` = ?) AS `EXIST`";

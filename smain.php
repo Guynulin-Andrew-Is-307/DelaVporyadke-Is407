@@ -3,6 +3,7 @@
 $show_complete_tasks = 0; //Показ выполненных здч
 $show_completed = '';
 $currentproject = '';
+
 $currentparam = isset($_GET['ParamSelect'])? esc($_GET['ParamSelect']) : 'AllTask' ;
 $errors = [];
 if (isset($_GET['show_completed'])) {
@@ -10,8 +11,11 @@ if (isset($_GET['show_completed'])) {
     $show_completed = 'show_completed='.$show_complete_tasks.'&';   
 }
 
-
-if (isset($_GET['project'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['SearchByTasks'])){
+        $taskz = get_tasks_from_search($con, $user_id, $_POST['SearchByTasks']);
+    }
+}elseif (isset($_GET['project'])) {
     $currentproject = esc($_GET['project']);
     $idprj = get_id_from_project($con, $user_id, $currentproject);
 

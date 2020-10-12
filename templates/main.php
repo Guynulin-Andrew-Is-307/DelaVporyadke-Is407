@@ -22,7 +22,7 @@
     <h2 class="content__main-heading">Список задач</h2>
 
     <form class="search-form" action="index.php" method="post" autocomplete="off">
-        <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+        <input class="search-form__input" type="text" name="SearchByTasks" value="<?=getPostVal('SearchByTasks')?>" placeholder="Поиск по задачам">
 
         <input class="search-form__submit" type="submit" name="" value="Искать">
     </form>
@@ -52,20 +52,18 @@
         ?>
 
     	<?php foreach ($taskz as $key => $tazk): ?>
-    		<?php if(($show_complete_tasks === 1 && $tazk['Completed']) || !$tazk['Completed']): ?>
-        <tr class="tasks__item task <?php if($tazk['Completed'])echo('task--completed') ?> <?php if( isset($taskz[$key]['DateOfCompletion']) && strtotime($taskz[$key]['DateOfCompletion']) - time() <= 86400)echo('task--important') ?>">
-            <td class="task__select">
-                <label class="checkbox task__checkbox">
-                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if($tazk['Completed'])echo('checked') ?>>
-                    <span class="checkbox__text"><?=htmlspecialchars($tazk['Name']) ?></span>
-                </label>
-            </td>
-            <?= isset($tazk['File']) ? '<td class="task__file"> <a class="download-link" href="'.$tazk['File'].'">'.getNameFileOfURl($tazk['File']).'</a> </td>' : ""?>
-
-
-            <?='<td class="task__date">'.$tazk['DateOfCompletion'].'</td>'?>
-        </tr>
-        <?php endif; ?>
+    		<?php if( (($show_complete_tasks === 1 && $tazk['Completed']) || !$tazk['Completed']) ): ?>
+                <tr class="tasks__item task <?php if($tazk['Completed'])echo('task--completed') ?> <?php if( isset($taskz[$key]['DateOfCompletion']) && strtotime($taskz[$key]['DateOfCompletion']) - time() <= 86400)echo('task--important') ?>">
+                    <td class="task__select">
+                        <label class="checkbox task__checkbox">
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if($tazk['Completed'])echo('checked') ?>>
+                            <span class="checkbox__text"><?=htmlspecialchars($tazk['Name']) ?></span>
+                        </label>
+                    </td>
+                    <?= isset($tazk['File']) ? '<td class="task__file"> <a class="download-link" href="'.$tazk['File'].'">'.getNameFileOfURl($tazk['File']).'</a> </td>' : ""?>
+                    <?='<td class="task__date">'.$tazk['DateOfCompletion'].'</td>'?>
+                </tr>
+            <?php endif; ?>
         <?php endforeach; ?>
     </table>
 </main>

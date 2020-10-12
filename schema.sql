@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 12 2020 г., 13:37
+-- Время создания: Окт 12 2020 г., 15:42
 -- Версия сервера: 5.7.25
 -- Версия PHP: 7.3.9
 
@@ -133,6 +133,7 @@ ALTER TABLE `task`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `Author` (`Author`),
   ADD KEY `project` (`Project`);
+ALTER TABLE `task` ADD FULLTEXT KEY `task_ft_search` (`Name`);
 
 --
 -- Индексы таблицы `user`

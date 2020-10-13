@@ -4,7 +4,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
-    $len =  is_strLen_valide(1, 255, $_POST['name']);
+    $len =  is_strLen_valide(3, 255, $_POST['name']);
     if (isset($len)) {
         $errors['name'] = $len;
     }elseif (get_try_project($con, $_POST['name'], $user_id)) {

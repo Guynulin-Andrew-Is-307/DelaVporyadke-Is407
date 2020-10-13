@@ -120,6 +120,7 @@ function get_try_user_from_email($con, $email) {
     return $idprj['EXIST'] !== 0 ? true : false;
 }
 
+
 //add задач
 function addTask($con, $name, $file = null, $date_c = null, $user_id, $proj) {
     $sql = "INSERT INTO `task` ( `Completed`, `Name`, `File`, `DateOfCompletion`, `Author`, `Project`) VALUES ( 0, ?, ?, ?, ?, ?)";
@@ -154,4 +155,13 @@ function get_try_project($con, $name, $user_id) {
     $res = mysqli_stmt_get_result($stmt);
     $idprj = mysqli_fetch_assoc($res);
     return $idprj['EXIST'] !== 0 ? true : false;
+}
+
+
+//Завершить задачу
+function setCheckedTask($con, $task, $user_id, $chk = 1) {
+    $sql = "UPDATE `task` SET `Completed` = ? WHERE `ID` = ? AND `Author` = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'iii', $chk, $task, $user_id);
+    mysqli_stmt_execute($stmt);
 }

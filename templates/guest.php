@@ -1,4 +1,4 @@
-<section class="welcome">
+<section>
   <h2 class="welcome__heading">«Дела в порядке»</h2>
 
   <div class="welcome__text">

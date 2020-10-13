@@ -33,17 +33,37 @@
         ?>
 
     	<?php foreach ($taskz as $key => $tazk): ?>
-    		<?php if( (($show_complete_tasks === 1 && $tazk['Completed']) || !$tazk['Completed']) ): ?>
-                <tr class="tasks__item task <?php if($tazk['Completed'])echo('task--completed') ?> <?php if( isset($taskz[$key]['DateOfCompletion']) && strtotime($taskz[$key]['DateOfCompletion']) - time() <= 86400)echo('task--important') ?>">
+    		<?php if( !$tazk['Completed'] || ($show_complete_tasks === 1 && $tazk['Completed']) ): ?>
+                <?php 
+                $raznica =  isset($taskz[$key]['DateOfCompletion']) ? strtotime($taskz[$key]['DateOfCompletion']) - time() : null ;
+                if( empty($_GET['ParamSelect']) || ($_GET['ParamSelect'] === "AllTask")  || 
+                    (
+                        isset($taskz[$key]['DateOfCompletion']) && 
+                        (
+                            ($_GET['ParamSelect'] === "Overdue" &&  $raznica <= -86400 ) ||
+                            ($_GET['ParamSelect'] === "Tomorrow" && $raznica  >= 0 && $raznica  <= 86400) ||
+                            ($_GET['ParamSelect'] === "Agenda" && $raznica  >= -86400 && $raznica  <= 0)
+                        )
+                    )
+                    ): ?>
+               
+                <tr class="tasks__item task <?php if($tazk['Completed'])echo('task--completed') ?> <?php if( isset($taskz[$key]['DateOfCompletion']) && $raznica <= -86400)echo('task--important') ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if($tazk['Completed'])echo('checked') ?>>
-                            <span class="checkbox__text"><?=htmlspecialchars($tazk['Name']) ?></span>
+                            <form action="" id="form<?=$taskz[$key]['ID']?>" method="post">
+                                <a onclick="document.getElementById('form<?=$taskz[$key]['ID']?>').submit(); return false;" style='color: #000 !important;text-decoration: none' href=""> 
+                                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" <?php if($tazk['Completed'])echo('checked') ?>>
+                                    <span class="checkbox__text"><?=htmlspecialchars($tazk['Name']) ?></span> </a>
+                       
+                                <input type="hidden" name="task_id" value="<?=$taskz[$key]['ID']?>">
+                                <input type="hidden" name="chk" value="<?=$taskz[$key]['Completed']?>">
+                            </form>
                         </label>
                     </td>
                     <?= isset($tazk['File']) ? '<td class="task__file"> <a class="download-link" href="'.$tazk['File'].'">'.getNameFileOfURl($tazk['File']).'</a> </td>' : ""?>
                     <?='<td class="task__date">'.$tazk['DateOfCompletion'].'</td>'?>
                 </tr>
+                 <?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
     </table>

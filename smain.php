@@ -11,6 +11,10 @@ if (isset($_GET['show_completed'])) {
     $show_completed = 'show_completed='.$show_complete_tasks.'&';   
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['task_id']) ) {
+    setCheckedTask($con, $_POST['task_id'], $user_id, $_POST['chk'] === "0" ? 1:0);
+}
+
 if (isset($_GET['project'])) {
     $currentproject = esc($_GET['project']);
     $idprj = get_id_from_project($con, $user_id, $currentproject);
